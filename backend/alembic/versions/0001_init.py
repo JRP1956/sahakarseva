@@ -60,7 +60,6 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('user_id')
     )
-    op.create_index('idx_customers_default_location', 'customers', ['default_location'], unique=False, postgresql_using='gist')
     op.create_table('demand_history',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('date', sa.Date(), nullable=False),
@@ -109,7 +108,6 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('user_id')
     )
-    op.create_index('idx_workers_location', 'workers', ['location'], unique=False, postgresql_using='gist')
     op.create_table('bookings',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('customer_id', sa.Integer(), nullable=False),
@@ -132,7 +130,6 @@ def upgrade() -> None:
     sa.ForeignKeyConstraint(['worker_id'], ['workers.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_index('idx_bookings_location', 'bookings', ['location'], unique=False, postgresql_using='gist')
     op.create_table('worker_certifications',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('worker_id', sa.Integer(), nullable=False),
@@ -178,14 +175,11 @@ def downgrade() -> None:
     op.drop_table('invoices')
     op.drop_table('worker_skills')
     op.drop_table('worker_certifications')
-    op.drop_index('idx_bookings_location', table_name='bookings', postgresql_using='gist')
     op.drop_table('bookings')
-    op.drop_index('idx_workers_location', table_name='workers', postgresql_using='gist')
     op.drop_table('workers')
     op.drop_table('skills')
     op.drop_table('forecasts')
     op.drop_table('demand_history')
-    op.drop_index('idx_customers_default_location', table_name='customers', postgresql_using='gist')
     op.drop_table('customers')
     op.drop_table('users')
     op.drop_table('services')
