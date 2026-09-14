@@ -8,9 +8,21 @@ A cooperative-owned marketplace connecting households with verified workers from
 |---|---|---|
 | `backend/` | FastAPI · PostgreSQL/PostGIS · XGBoost | [backend/README.md](backend/README.md) |
 | `admin/` | Next.js federation dashboard | [admin/README.md](admin/README.md) |
-| `mobile/` | Flutter customer + worker app | (in progress) |
+| `mobile/` | Flutter customer + worker app (EN/HI/MR) | [mobile/README.md](mobile/README.md) |
 
-Design spec: [docs/superpowers/specs](docs/superpowers/specs/2026-09-14-coop-gig-platform-design.md) · PPT brief: [docs/SIH-PPT-CONTEXT.md](docs/SIH-PPT-CONTEXT.md)
+## Documentation
+
+| Doc | What it covers |
+|---|---|
+| [CLAUDE.md](CLAUDE.md) / [AGENTS.md](AGENTS.md) | Agent guidance: rules, repo map, gotchas, where to change what |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | System design, data model, pricing, matching, state machine, forecasting, auth |
+| [docs/API.md](docs/API.md) | Every endpoint with shapes and a curl walkthrough |
+| [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) | Setup, running, testing, common tasks, troubleshooting |
+| [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Railway/Vercel, env vars, APK, Razorpay |
+| [docs/DEMO-SCRIPT.md](docs/DEMO-SCRIPT.md) | 5-minute judge demo with seed accounts |
+| [docs/SIH-PPT-CONTEXT.md](docs/SIH-PPT-CONTEXT.md) | Presentation brief |
+| [docs/superpowers/specs](docs/superpowers/specs/2026-09-14-coop-gig-platform-design.md) | Approved design spec (source of truth) |
+| `backend/`, `admin/`, `mobile/` `CLAUDE.md` | Per-subproject agent guidance |
 
 ## Quick start
 ```bash
