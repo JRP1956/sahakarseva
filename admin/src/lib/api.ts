@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const API = process.env.API_URL ?? "http://localhost:8000/api/v1";
 
@@ -13,6 +14,7 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise
     cache: "no-store",
     headers: { "content-type": "application/json", ...(t ? { authorization: `Bearer ${t}` } : {}), ...(init.headers ?? {}) },
   });
+  if (res.status === 401) redirect("/login"); // expired/invalid token → sign in again
   if (!res.ok) throw new Error(`${path} → ${res.status} ${await res.text()}`);
   return res.json();
 }
