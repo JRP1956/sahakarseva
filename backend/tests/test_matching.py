@@ -23,7 +23,7 @@ def test_fair_workload_prefers_lighter_worker():
 def _worker(db, coop, skill, name, lat, lng, jobs=0):
     u = User(phone=f"9{abs(hash(name)) % 10**9:09d}", password_hash="x", role="worker", name=name)
     db.add(u); db.flush()
-    w = Worker(user_id=u.id, coop_id=coop.id, location=f"SRID=4326;POINT({lng} {lat})", experience_years=5, rating_avg=4.5, jobs_this_week=jobs)
+    w = Worker(user_id=u.id, coop_id=coop.id, location=f"SRID=4326;POINT({lng} {lat})", lat=lat, lng=lng, experience_years=5, rating_avg=4.5, jobs_this_week=jobs)
     db.add(w); db.flush()
     db.add(WorkerSkill(worker_id=w.id, skill_id=skill.id)); db.flush()
     return w

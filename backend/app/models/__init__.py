@@ -77,6 +77,8 @@ class Worker(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), unique=True)
     coop_id: Mapped[int] = mapped_column(ForeignKey("cooperatives.id"))
     location = mapped_column(Geography("POINT", srid=4326), nullable=True)
+    lat: Mapped[float | None]
+    lng: Mapped[float | None]
     is_available: Mapped[bool] = mapped_column(default=True)
     experience_years: Mapped[int] = mapped_column(default=0)
     rating_avg: Mapped[float] = mapped_column(default=0.0)
