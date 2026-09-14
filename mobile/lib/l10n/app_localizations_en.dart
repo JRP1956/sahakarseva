@@ -50,7 +50,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get emergencyHint =>
-      'Auto-assigns the best available worker · 1.5× price';
+      'Auto-assigns the best available worker. 1.5x price';
 
   @override
   String get myBookings => 'My bookings';

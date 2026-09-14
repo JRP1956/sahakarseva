@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../api.dart';
+import '../../theme.dart';
 import '../../widgets.dart';
 import 'booking_detail.dart';
 import 'match.dart';
@@ -56,38 +57,43 @@ class _BookScreenState extends State<BookScreen> {
     final t = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(title: Text(t.bookService(widget.service['name']))),
-      body: ListView(padding: const EdgeInsets.all(16), children: [
-        TextField(controller: address, decoration: InputDecoration(labelText: t.address, prefixIcon: const Icon(Icons.home))),
-        const SizedBox(height: 8),
-        Text(t.pinLocation, style: const TextStyle(fontSize: 12, color: Colors.grey)),
-        const SizedBox(height: 4),
+      body: ListView(padding: const EdgeInsets.all(Ds.space4), children: [
+        TextField(controller: address, decoration: InputDecoration(labelText: t.address, prefixIcon: const Icon(Icons.home_outlined))),
+        const SizedBox(height: Ds.space3),
+        Text(t.pinLocation, style: Theme.of(context).textTheme.bodySmall),
+        const SizedBox(height: Ds.space2),
         SizedBox(
           height: 220,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(Ds.radiusCard),
             child: FlutterMap(
               options: MapOptions(initialCenter: pin, initialZoom: 12, onTap: (_, p) => setState(() => pin = p)),
               children: [
                 TileLayer(urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png', userAgentPackageName: 'in.coop.sahakarseva'),
-                MarkerLayer(markers: [Marker(point: pin, width: 40, height: 40, child: const Icon(Icons.location_pin, color: Colors.red, size: 40))]),
+                MarkerLayer(markers: [Marker(point: pin, width: 40, height: 40, child: Icon(Icons.location_pin, color: Ds.of(context).c.actionDestructive, size: 40))]),
               ],
             ),
           ),
         ),
-        const SizedBox(height: 12),
-        ListTile(
-          contentPadding: EdgeInsets.zero,
-          leading: const Icon(Icons.schedule),
-          title: Text(t.when),
-          subtitle: Text(DateFormat('EEE d MMM yyyy, h:mm a').format(when)),
-          trailing: const Icon(Icons.edit),
-          onTap: pickWhen,
+        const SizedBox(height: Ds.space4),
+        Card(
+          clipBehavior: Clip.antiAlias,
+          child: Column(children: [
+            ListTile(
+              leading: const Icon(Icons.schedule_outlined),
+              title: Text(t.when),
+              subtitle: Text(DateFormat('EEE d MMM yyyy, h:mm a').format(when)),
+              trailing: const Icon(Icons.edit_outlined),
+              onTap: pickWhen,
+            ),
+            const Divider(),
+            SwitchListTile(value: emergency, onChanged: (v) => setState(() => emergency = v), title: Text(t.isEmergency), secondary: Icon(Icons.bolt_rounded, color: Ds.of(context).c.feedbackErrorIcon)),
+          ]),
         ),
-        SwitchListTile(contentPadding: EdgeInsets.zero, value: emergency, onChanged: (v) => setState(() => emergency = v), title: Text(t.isEmergency), secondary: const Icon(Icons.bolt, color: Colors.red)),
-        const SizedBox(height: 8),
+        const SizedBox(height: Ds.space4),
         PriceSplit(customer: total, worker: wage, coop: total - wage),
-        const SizedBox(height: 16),
-        FilledButton.icon(onPressed: busy ? null : submit, icon: const Icon(Icons.search), label: Text(t.findWorkers)),
+        const SizedBox(height: Ds.space6),
+        BusyButton(busy: busy, onPressed: submit, icon: Icons.search, label: t.findWorkers),
       ]),
     );
   }

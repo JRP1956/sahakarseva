@@ -69,7 +69,7 @@ Every bullet the PS asks for, and how we cover it:
 | Multilingual mobile application | EN / HI / MR via Flutter localisation |
 | AI-based demand forecasting & workforce allocation | XGBoost 7-day forecast per service per area; shortage = predicted − available workers → recommendations |
 
-Technology components asked: Mobile Apps ✅ · AI ✅ · Geo-spatial ✅ · Digital Payments ✅ · Cloud ✅ (Railway/AWS).
+Technology components asked: Mobile Apps · AI · Geo-spatial · Digital Payments · Cloud (Railway/AWS).
 
 ---
 
@@ -179,7 +179,7 @@ Compare: private platforms take 20–35% commission and the worker doesn't see t
 Example dashboard output:
 ```
 Andheri — tomorrow
-Cleaning     ████████████  predicted 20   available 12   ⚠ shortage 8
+Cleaning     ████████████  predicted 20   available 12   shortage 8
 Electrical   █████████     predicted 12   available 15   ok
 Plumbing     ██████        predicted  8   available  9   ok
 
@@ -195,7 +195,7 @@ The federation can act on this: notify idle cleaning workers in nearby Bandra, o
 ### Customer
 1. Login (phone + password) → Home: search bar, service categories, **Emergency** button, upcoming bookings
 2. Pick service → pick location on map → date/time
-3. Match results: 5 worker cards — name, society, ⭐ rating, distance, price, welfare badges (Insured ✓, Coop member ✓)
+3. Match results: 5 worker cards — name, society, star rating, distance, price, welfare badges (Insured, Coop member)
 4. Confirm → Razorpay checkout
 5. Booking detail: status timeline (Assigned → Accepted → In progress → Completed → Paid)
 6. Rate & review → invoice
@@ -212,15 +212,15 @@ Worker profile card (good for a slide):
 ┌────────────────────────────┐
 │ Ramesh Kumar               │
 │ Electrician · Andheri LCS  │
-│ ⭐ 4.8  (112 jobs)         │
+│ 4.8 stars (112 jobs)         │
 │ Skills                     │
-│ ✓ Residential Wiring       │
-│ ✓ Appliance Repair         │
+│ - Residential Wiring       │
+│ - Appliance Repair         │
 │ Certifications             │
-│ ✓ ITI Electrical  ✓ Safety │
+│ - ITI Electrical  - Safety │
 │ Welfare                    │
-│ ✓ Insurance  ✓ Accident    │
-│ ✓ Cooperative Member       │
+│ - Insurance  - Accident    │
+│ - Cooperative Member       │
 │ Jobs this month: 34        │
 │ Earnings: ₹18,420          │
 └────────────────────────────┘

@@ -32,7 +32,7 @@ Reseed (see `DEVELOPMENT.md`), run the forecast in admin, log both apps in.
 - Optional: toggle the **Available** switch — "he disappears from matching instantly."
 
 ## 4. Customer pays and rates (app as customer, 30 s)
-- Sign back in → booking → **Pay ₹500** (Razorpay test mode / demo) → **Rate** 5★ → *Rated* → **View invoice**
+- Sign back in → booking → **Pay ₹500** (Razorpay test mode / demo) → **Rate** 5 stars → *Rated* → **View invoice**
   shows the 80/20 split.
 
 ## 5. Back to the federation (admin, 60 s)
@@ -49,7 +49,7 @@ worker. Built for Labour Cooperative Federations to run themselves."
 
 ## Emergency demo variant (if asked)
 Home → red **Emergency** button → pick a service → the app skips the match screen: top-scored worker is
-auto-assigned at 1.5× price. Show the ⚡ badge in the admin bookings table.
+auto-assigned at 1.5× price. Show the Emergency badge in the admin bookings table.
 
 ## If something breaks
 - No workers matched → pin was moved too far; re-open Plumbing (default pin is Andheri).

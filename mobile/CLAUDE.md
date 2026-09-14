@@ -24,17 +24,23 @@ lib/main.dart                  App (StatefulWidget). AppState.refresh()/setLang(
 lib/api.dart                   Api.I singleton: get/post/put/patch/form, login/register/logout, token+role+lang in
                                SharedPreferences (web: localStorage keys flutter.token/role/lang). ApiException(status, message).
                                inr(v) formats ₹. API base = --dart-define API_URL, default http://localhost:8000/api/v1.
-lib/widgets.dart               kStatuses order, statusLabel(t, s), StatusChip, WelfareBadges, PriceSplit, Loading,
-                               Async<T>(future, builder), toast(), LangMenu.
+lib/theme_tokens.g.dart        GENERATED from tokens/colors.json by `python3 mobile/tool/build_tokens.py` (run from repo
+                               root). DsColors.light / DsColors.dark. Never edit; never use Colors.* in screens.
+lib/theme.dart                 buildTheme(Brightness) -> ThemeData from the tokens; Ds extension (Ds.of(context).c
+                               for colours, Ds.space*/radius*/control* constants). Spacious density: 16px body, 52px
+                               primary buttons, 40/48px display sizes for the one lead figure per screen.
+lib/widgets.dart               kStatuses order, statusLabel(t, s), statusTone(), StatusChip, Pill, Rating, WelfareBadges,
+                               PriceSplit (ledger), SectionTitle, Empty(icon,title,body), Loading, Async<T>,
+                               BusyButton (loading keeps full strength), toast(), LangMenu.
 lib/l10n/app_{en,hi,mr}.arb    every UI string; generated app_localizations*.dart are committed.
 lib/screens/login.dart         phone/password; "Create account" toggles register mode (role segmented button,
                                society dropdown from GET /services/cooperatives for workers).
-lib/screens/customer/home.dart services grid → BookScreen; Emergency FAB → bottom sheet of services → BookScreen(emergency:true);
+lib/screens/customer/home.dart services list rows → BookScreen; Emergency band → bottom sheet of services → BookScreen(emergency:true);
                                My bookings list (BookingTile, also reused by the worker tab).
 lib/screens/customer/book.dart address, flutter_map pin (tap to move, default Andheri), date+time pickers,
                                emergency switch, live PriceSplit preview → POST /bookings → MatchScreen, or
                                BookingDetail directly if the API auto-assigned (emergency).
-lib/screens/customer/match.dart POST /bookings/{id}/match → WorkerCard list (rank, score, ⭐, km, experience,
+lib/screens/customer/match.dart POST /bookings/{id}/match → WorkerCard list (rank 1 is the hero card; score, star rating, km, experience,
                                jobs this week, skills, welfare badges, score-breakdown bar) → assign → BookingDetail.
 lib/screens/customer/booking_detail.dart status timeline over kStatuses, worker card, PriceSplit, actions by status:
                                completed→Pay (demo-mark-paid), paid→Rate dialog, paid/rated→View invoice (url_launcher

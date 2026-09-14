@@ -6,6 +6,7 @@ import 'api.dart';
 import 'screens/customer/home.dart';
 import 'screens/login.dart';
 import 'screens/worker/home.dart';
+import 'theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +41,9 @@ class AppState extends State<App> {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        theme: ThemeData(colorSchemeSeed: const Color(0xFF047857), useMaterial3: true),
+        theme: buildTheme(Brightness.light),
+        darkTheme: buildTheme(Brightness.dark),
+        themeMode: ThemeMode.system,
         home: switch (Api.I.role) {
           'customer' => const CustomerHome(),
           'worker' => const WorkerHome(),

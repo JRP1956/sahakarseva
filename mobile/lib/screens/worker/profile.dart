@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 
 import '../../api.dart';
+import '../../theme.dart';
 import '../../widgets.dart';
 
 class ProfileTab extends StatefulWidget {
@@ -65,46 +66,52 @@ class _ProfileTabState extends State<ProfileTab> {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
+    final c = Ds.of(context).c;
+    final text = Theme.of(context).textTheme;
     return Async<Map>(
       future: me,
-      builder: (m) => ListView(padding: const EdgeInsets.all(16), children: [
-        Row(children: [
-          const CircleAvatar(radius: 28, child: Icon(Icons.person, size: 32)),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(m['name'], style: Theme.of(context).textTheme.titleLarge),
-              Text(m['coop_name'], style: const TextStyle(color: Colors.grey)),
-              Text('⭐ ${m['rating_avg']} (${m['rating_count']}) · ${t.experience(m['experience_years'])} · ${t.jobsThisWeek(m['jobs_this_week'])}', style: const TextStyle(fontSize: 12)),
-            ]),
-          ),
+      builder: (m) => ListView(padding: const EdgeInsets.all(Ds.space4), children: [
+        Text(m['name'], style: text.displayMedium),
+        const SizedBox(height: Ds.space1),
+        Text(m['coop_name'], style: text.bodyLarge!.copyWith(color: c.textSecondary)),
+        const SizedBox(height: Ds.space3),
+        Wrap(spacing: Ds.space4, runSpacing: Ds.space1, crossAxisAlignment: WrapCrossAlignment.center, children: [
+          Rating(m['rating_avg'], m['rating_count']),
+          Text(t.experience(m['experience_years'])),
+          Text(t.jobsThisWeek(m['jobs_this_week'])),
         ]),
-        const SizedBox(height: 16),
+        SectionTitle(t.welfare),
         Card(
-          color: Colors.green.shade50,
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(t.welfare, style: const TextStyle(fontWeight: FontWeight.w600)),
-              const SizedBox(height: 6),
-              for (final (on, label) in [(m['has_insurance'], t.insured), (m['has_accident_cover'], t.accidentCover), (m['is_coop_member'], t.coopMember)])
-                Row(children: [Icon(on == true ? Icons.verified : Icons.cancel_outlined, size: 18, color: on == true ? Colors.green.shade700 : Colors.grey), const SizedBox(width: 6), Text(label)]),
-            ]),
-          ),
+          clipBehavior: Clip.antiAlias,
+          child: Column(children: [
+            for (final (i, (on, label)) in [(m['has_insurance'], t.insured), (m['has_accident_cover'], t.accidentCover), (m['is_coop_member'], t.coopMember)].indexed) ...[
+              if (i > 0) const Divider(),
+              ListTile(
+                leading: Icon(on == true ? Icons.verified_outlined : Icons.remove_circle_outline, color: on == true ? c.feedbackSuccessIcon : c.textTertiary),
+                title: Text(label),
+              ),
+            ],
+          ]),
         ),
-        const SizedBox(height: 12),
-        Row(children: [Expanded(child: Text(t.skills, style: const TextStyle(fontWeight: FontWeight.w600))), TextButton(onPressed: () => editSkills(m), child: const Icon(Icons.edit, size: 18))]),
-        Wrap(spacing: 6, children: [for (final s in m['skills']) Chip(label: Text('${s['name']}'), visualDensity: VisualDensity.compact)]),
-        const SizedBox(height: 12),
-        Row(children: [Expanded(child: Text(t.certifications, style: const TextStyle(fontWeight: FontWeight.w600))), TextButton(onPressed: addCert, child: const Icon(Icons.add, size: 18))]),
-        for (final c in m['certifications'])
-          ListTile(
-            dense: true,
-            contentPadding: EdgeInsets.zero,
-            leading: Icon(c['verified'] == true ? Icons.verified : Icons.hourglass_top, color: c['verified'] == true ? Colors.green : Colors.orange),
-            title: Text(c['name']),
-            subtitle: Text(c['verified'] == true ? t.verified : t.pendingVerification),
-          ),
+        SectionTitle(t.skills, trailing: IconButton(onPressed: () => editSkills(m), tooltip: t.skills, icon: const Icon(Icons.edit_outlined))),
+        Wrap(spacing: Ds.space2, runSpacing: Ds.space2, children: [for (final s in m['skills']) Chip(label: Text('${s['name']}'))]),
+        SectionTitle(t.certifications, trailing: TextButton.icon(onPressed: addCert, icon: const Icon(Icons.add, size: 18), label: Text(t.addCertification))),
+        Card(
+          clipBehavior: Clip.antiAlias,
+          child: (m['certifications'] as List).isEmpty
+              ? Padding(padding: const EdgeInsets.all(Ds.space4), child: Text(t.addCertification, style: text.bodySmall))
+              : Column(children: [
+                  for (final (i, cert) in (m['certifications'] as List).indexed) ...[
+                    if (i > 0) const Divider(),
+                    ListTile(
+                      leading: Icon(cert['verified'] == true ? Icons.verified_outlined : Icons.hourglass_top_outlined, color: cert['verified'] == true ? c.feedbackSuccessIcon : c.feedbackWarningIcon),
+                      title: Text(cert['name']),
+                      subtitle: Text(cert['verified'] == true ? t.verified : t.pendingVerification),
+                    ),
+                  ],
+                ]),
+        ),
+        const SizedBox(height: Ds.space8),
       ]),
     );
   }

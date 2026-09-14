@@ -26,10 +26,20 @@ Login `9999999999` / `pass123` (only `role == "admin"` accounts are accepted).
 - **Map:** `DemandMap.tsx` is a client component; `MapClient.tsx` wraps it in `next/dynamic({ ssr: false })`
   because Leaflet touches `window`. Leaflet CSS is imported in `layout.tsx`. Tiles from OSM (no key).
 - **Charts:** none — `ForecastBars.tsx` is CSS bars (light = available workers, dark = predicted, red when shortage).
-- **UI primitives:** `components/ui.tsx` — `Card`, `Tile`, `Table(head, rows)`, `Badge(tone=status)`, `Check`, `H1`.
-  Use them; don't add shadcn.
-- **Styling:** `globals.css` is light-only on purpose (dark `prefers-color-scheme` broke the browser-pane screenshots).
-  Palette: emerald-900 sidebar, emerald-700 primary, gray-50 background.
+- **UI primitives:** `components/ui.tsx` — `Card`, `Stat(lead)`, `Table(head, rows, empty)`, `Badge(tone=status)`,
+  `Check`, `PageHeader`, `Filters`, `Footer`, `Empty`, and the `btn` class map. `components/icons.tsx` holds lucide
+  icons as inline SVG. Use them; don't add shadcn, don't add emoji.
+- **Styling (design tokens):** `src/app/theme.css` is **generated** from the repo-root `tokens/*.json` by
+  `node scripts/build_tokens.mjs --out admin/src/app/theme.css` (then rename `--space-N.5` to `--space-N-5`; Turbopack
+  rejects the dot). `globals.css` imports it and maps the semantic vars into Tailwind v4 `@theme inline` names:
+  `bg-page`, `bg-card`, `text-fg`, `text-fg-2`, `border-line`, `bg-primary`, `bg-danger`, `bg-success-bg`, etc.
+  Never write a hex, px, or Tailwind palette class (`emerald-700`, `gray-50`) in a page; `python3 scripts/lint_hardcodes.py admin/src` must stay clean.
+- **Dark mode:** a one-line script in the root `layout.tsx` sets `data-theme` from `prefers-color-scheme`; the token
+  layer switches at `[data-theme="dark"]`. Every page must read correctly in both (check with the browser pane).
+- **Layout:** pages live in `src/app/(app)/` under a sidebar layout; `/login` sits outside it (full-screen split).
+- **Composition rules (from the kit):** one lead element per page (`Stat lead` or the H1), lucide icons only,
+  loading keeps the button at full strength (`aria-busy`), tables get `Empty` when rows are `[]`, every page ends
+  with a `Footer` line.
 
 ## Pages → endpoints
 

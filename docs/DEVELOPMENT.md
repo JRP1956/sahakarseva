@@ -60,7 +60,7 @@ uv run alembic upgrade head && uv run pytest -q
 
 ### Add a booking status
 `BookingStatus` (models) → `ALLOWED` + actor sets (`services/lifecycle.py`) → `kStatuses` + `statusLabel` +
-ARB keys `status_<name>` (mobile) → `STATUS` colours (`admin/src/components/ui.tsx`) → `STATUSES` filter list
+ARB keys `status_<name>` + `statusTone()` (mobile) → `STATUS_TONE` map (`admin/src/components/ui.tsx`) → `STATUSES` filter list
 (`admin/src/app/bookings/page.tsx`) → tests.
 
 ### Add/modify UI text in the app
@@ -98,7 +98,9 @@ cd backend && uv run alembic upgrade head && uv run python seed.py
 | Flutter: `setState() callback argument returned a Future` | Use a block body `setState(() { x = _load(); })`. |
 | Flutter list doesn't update after an action | Same cause as above — the future was never assigned. |
 | `Failed to bind web development server … port 5555` | `lsof -tiTCP:5555 -sTCP:LISTEN \| xargs kill -9`. |
-| Admin renders dark cards with black text | `globals.css` must stay light-only (no `prefers-color-scheme` block). |
+| Admin page shows a colour that ignores dark mode | It used a hex or a Tailwind palette class instead of a token utility. `python3 scripts/lint_hardcodes.py admin/src` finds it. |
+| Next dev: `Parsing CSS source code failed … --space-0.5` | Regenerated `theme.css` without renaming the fractional vars: `sed -i '' -E 's/--space-([0-9])\.5:/--space-\1-5:/' admin/src/app/theme.css`. |
+| Flutter colour looks wrong in dark mode | Screen used `Colors.*` or a light-only token. Use `Ds.of(context).c.<token>`; accent text on surfaces is `textLink`, not `actionPrimary`. |
 | Admin `apiFetch` throws `401` after ~15 min | Access token expired; sign out/in. Refresh flow is deliberately absent. |
 | `POST /payments/demo-mark-paid` → 404 | `DEMO_MARK_PAID=false` in env; intended for production. |
 | Match returns `[]` | No available worker with that service's skill within 10 km of the pin, or all busy at that hour. Default pin is Andheri where the seed guarantees plumbers/electricians/cleaners. |

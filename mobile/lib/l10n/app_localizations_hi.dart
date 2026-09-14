@@ -50,7 +50,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get emergencyHint =>
-      'सर्वश्रेष्ठ उपलब्ध कामगार स्वतः नियुक्त · 1.5× मूल्य';
+      'सर्वश्रेष्ठ उपलब्ध कामगार स्वतः नियुक्त. 1.5x मूल्य';
 
   @override
   String get myBookings => 'मेरी बुकिंग';

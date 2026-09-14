@@ -181,7 +181,7 @@ abstract class AppLocalizations {
   /// No description provided for @emergencyHint.
   ///
   /// In en, this message translates to:
-  /// **'Auto-assigns the best available worker · 1.5× price'**
+  /// **'Auto-assigns the best available worker. 1.5x price'**
   String get emergencyHint;
 
   /// No description provided for @myBookings.

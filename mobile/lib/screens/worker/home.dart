@@ -3,6 +3,7 @@ import 'package:mobile/l10n/app_localizations.dart';
 
 import '../../api.dart';
 import '../../main.dart';
+import '../../theme.dart';
 import '../../widgets.dart';
 import 'earnings.dart';
 import 'jobs.dart';
@@ -34,14 +35,27 @@ class _WorkerHomeState extends State<WorkerHome> {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
+    final c = Ds.of(context).c;
     final pages = [JobsTab(key: ValueKey('j$refreshKey'), onChanged: () => setState(() => refreshKey++)), MyBookingsTab(key: ValueKey('b$refreshKey')), EarningsTab(key: ValueKey('e$refreshKey')), const ProfileTab()];
+    final titles = [t.jobs, t.bookings, t.earnings, t.profile];
     return Scaffold(
       appBar: AppBar(
-        title: Text(t.appName),
+        title: Text(titles[tab]),
         actions: [
-          if (available != null) Row(children: [Text(t.available, style: const TextStyle(fontSize: 12)), Switch(value: available!, onChanged: toggle)]),
+          if (available != null)
+            Semantics(
+              toggled: available,
+              label: t.available,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: Ds.space2),
+                child: Row(children: [
+                  Text(t.available, style: Theme.of(context).textTheme.bodySmall!.copyWith(color: available! ? c.feedbackSuccessText : c.textSecondary)),
+                  Switch(value: available!, onChanged: toggle),
+                ]),
+              ),
+            ),
           LangMenu(onChanged: App.of(context).setLang),
-          IconButton(icon: const Icon(Icons.logout), onPressed: () async { await Api.I.logout(); if (context.mounted) App.of(context).refresh(); }),
+          IconButton(icon: const Icon(Icons.logout), tooltip: t.signOut, onPressed: () async { await Api.I.logout(); if (context.mounted) App.of(context).refresh(); }),
         ],
       ),
       body: pages[tab],
@@ -49,10 +63,10 @@ class _WorkerHomeState extends State<WorkerHome> {
         selectedIndex: tab,
         onDestinationSelected: (i) => setState(() { tab = i; refreshKey++; }),
         destinations: [
-          NavigationDestination(icon: const Icon(Icons.work_outline), label: t.jobs),
-          NavigationDestination(icon: const Icon(Icons.list_alt), label: t.bookings),
+          NavigationDestination(icon: const Icon(Icons.work_outline), selectedIcon: const Icon(Icons.work), label: t.jobs),
+          NavigationDestination(icon: const Icon(Icons.list_alt_outlined), selectedIcon: const Icon(Icons.list_alt), label: t.bookings),
           NavigationDestination(icon: const Icon(Icons.currency_rupee), label: t.earnings),
-          NavigationDestination(icon: const Icon(Icons.person_outline), label: t.profile),
+          NavigationDestination(icon: const Icon(Icons.person_outline), selectedIcon: const Icon(Icons.person), label: t.profile),
         ],
       ),
     );

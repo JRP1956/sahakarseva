@@ -12,7 +12,7 @@
   "signOut": "Sign out",
   "services": "Services",
   "emergency": "Emergency",
-  "emergencyHint": "Auto-assigns the best available worker · 1.5× price",
+  "emergencyHint": "Auto-assigns the best available worker. 1.5x price",
   "myBookings": "My bookings",
   "noBookings": "No bookings yet",
   "bookService": "Book {service}",

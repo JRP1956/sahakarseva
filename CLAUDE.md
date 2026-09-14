@@ -74,7 +74,7 @@ gig-work/
 | Flutter l10n output is `package:mobile/l10n/app_localizations.dart` | Newer Flutter no longer emits the synthetic `flutter_gen` package. Regenerate with `flutter gen-l10n`. |
 | Next.js 16: `src/proxy.ts` exporting `proxy()` replaces `middleware.ts` | Also `cookies()` / `searchParams` are async. |
 | Flutter `setState(() => x = future())` throws at runtime | Arrow returns the Future. Use `setState(() { x = future(); })`. Fixed everywhere once; don't reintroduce. |
-| Admin `globals.css` is light-only | The create-next-app dark `@media` rule made cards unreadable in the dark-themed browser pane. |
+| Admin `theme.css` and mobile `theme_tokens.g.dart` are generated from `tokens/*.json` | Edit the tokens, rerun `node scripts/build_tokens.mjs --out admin/src/app/theme.css` (then rename `--space-N.5` to `--space-N-5`) and `python3 mobile/tool/build_tokens.py`. Never hand-edit the outputs. |
 | Invoice endpoint accepts `?token=` | Browser navigations can't set a Bearer header; the Flutter "View invoice" button uses this. |
 | Razorpay SDK is **not** in the Flutter app | No web support. Backend `POST /payments/verify` is ready; `demo-mark-paid` is the demo path (gated by `DEMO_MARK_PAID`). |
 | Forecast start date = day after the last `demand_history` row | Seed writes history up to yesterday, so forecasts start today. |
@@ -86,14 +86,33 @@ gig-work/
 |---|---|
 | change the match score weights / radius | `backend/app/services/matching.py` (`WEIGHTS`, `RADIUS_M`) + `tests/test_matching.py` + PPT §7 |
 | change wage split or emergency multiplier | per-service `worker_share_pct` in DB / seed; `EMERGENCY_MULTIPLIER` in `services/pricing.py` |
-| add a booking state or transition | `services/lifecycle.py` (`ALLOWED`, `WORKER_ACTIONS`, `CUSTOMER_ACTIONS`), `BookingStatus` enum, `kStatuses` in `mobile/lib/widgets.dart`, `STATUS` map in `admin/src/components/ui.tsx` |
+| add a booking state or transition | `services/lifecycle.py` (`ALLOWED`, `WORKER_ACTIONS`, `CUSTOMER_ACTIONS`), `BookingStatus` enum, `kStatuses` + `statusTone()` in `mobile/lib/widgets.dart`, `STATUS_TONE` map in `admin/src/components/ui.tsx` |
 | add an endpoint | new/existing router in `backend/app/routers/`, include in `main.py`, a test in `backend/tests/`, row in `docs/API.md` |
 | add a DB column | model in `backend/app/models/__init__.py` → `uv run alembic revision --autogenerate -m "…"` → check the file (remove duplicate GIST index ops on geography columns) → `uv run alembic upgrade head` |
 | add a UI string to the app | all three ARB files in `mobile/lib/l10n/` → `flutter gen-l10n` |
 | add a language | new `app_xx.arb`, add `Locale('xx')` to `supportedLocales` in `mobile/lib/main.dart`, item in `LangMenu` |
 | add an admin page | `admin/src/app/<name>/page.tsx` (server component using `apiFetch`), link in `NAV` in `layout.tsx` |
 | change forecast features/model | `backend/ml/forecast.py` (`FEATURES`, `build_features`, `train`) + `tests/test_forecast.py` |
+| change a colour, radius, or type size | `tokens/*.json` only (primitive ramps live under the `blue`/`gray` keys so semantic aliases stay valid), then regenerate both outputs and run `python3 scripts/validate_contrast.py` |
 | change the demo data | `backend/seed.py` — then truncate & reseed (see `backend/CLAUDE.md`) |
+
+## Design system (non-negotiable for any UI change)
+
+The UI is built on the vendored `plugin87/ux-ui-agent-skills` kit (`tokens/`, `components/`, `taste/`, `.claude/rules/*`,
+`scripts/`). The full doctrine is in `docs/design-kit-doctrine.md`; the parts that bite here:
+
+1. **One theme, one source of truth.** `tokens/*.json` -> generated `admin/src/app/theme.css` and `mobile/lib/theme_tokens.g.dart`.
+   No hex, px, `Colors.*`, or Tailwind palette classes in screens. Gate: `python3 scripts/lint_hardcodes.py admin/src`.
+2. **Zero emoji anywhere**: UI, code, docs, commit messages. Icons are lucide inline SVG (admin) or Material icons (Flutter).
+   Gate: `python3 scripts/check_no_emoji.py admin/src docs CLAUDE.md`.
+3. **No em-dashes in UI copy**; write two sentences instead. (Docs may keep them.)
+4. **Token by intent**: destructive actions use the danger variant (`btn.danger`, `c.actionDestructive`), never primary.
+5. **One thing leads** per screen (a `Stat lead`, a display-size figure, or the H1), display >= 2.5x body.
+6. **All states**: hover, focus ring, active, disabled, loading (full strength + spinner, never the disabled look), empty (`Empty`), error.
+7. **Both modes**: every screen checked in light and dark in the browser pane before commit.
+8. **Contrast on the source**: `python3 scripts/validate_contrast.py` must pass after any token change.
+
+Direction: anchor `enterprise` from the kit library, retuned. Admin = compact density; app = spacious density. Same tokens.
 
 ## Definition of done for any task
 
