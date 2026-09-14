@@ -27,7 +27,7 @@ export default function Login() {
         </div>
         <div className="text-xs opacity-70">Ministry of Cooperation, NCCT. SIH 2026, PS 26089.</div>
       </section>
-      <section className="flex flex-col justify-center px-8 py-16 lg:px-24">
+      <section className="flex flex-col justify-start lg:justify-center px-6 pt-20 pb-12 lg:px-24 lg:py-16">
         <form onSubmit={submit} className="w-full max-w-sm space-y-5" aria-busy={busy}>
           <div><h1 className="text-2xl font-semibold tracking-tight">Sign in</h1><p className="text-sm text-fg-2 mt-1">Federation administrators only.</p></div>
           <label className="block text-sm"><span className="text-fg-2">Phone</span>

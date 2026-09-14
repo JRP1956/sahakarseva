@@ -17,7 +17,7 @@ export default async function Welfare() {
       <PageHeader title="Worker welfare" sub="Coverage the cooperative provides that private gig platforms do not." />
       <div className="grid md:grid-cols-[2fr_3fr] gap-6 mb-8">
         <Stat lead label="Workers insured" value={`${pct(w.insured, w.total)}%`} hint={`${w.insured} of ${w.total} workers`} />
-        <div className="grid grid-cols-2 gap-6 content-center border-l border-line pl-6">
+        <div className="grid grid-cols-2 gap-6 content-center md:border-l border-line md:pl-6">
           <Stat label="Accident cover" value={`${pct(w.accident_cover, w.total)}%`} />
           <Stat label="Cooperative members" value={`${pct(w.members, w.total)}%`} />
         </div>

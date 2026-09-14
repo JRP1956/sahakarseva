@@ -18,7 +18,7 @@ export default async function Dashboard() {
       <PageHeader title="Mumbai Labour Cooperative Federation" sub={today} />
       <div className="grid md:grid-cols-[2fr_3fr] gap-6 mb-8">
         <Stat lead label="Jobs today" value={stats.todays_jobs} hint={`${stats.bookings_by_status.in_progress ?? 0} in progress right now`} />
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 content-center border-l border-line pl-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 content-center md:border-l border-line md:pl-6">
           <Stat label="Workers" value={stats.workers} />
           <Stat label="Available now" value={stats.active_workers} />
           <Stat label="Customers" value={stats.customers} />

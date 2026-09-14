@@ -25,7 +25,7 @@ export default async function Forecast({ searchParams }: { searchParams: Promise
           <Filters items={dates} current={date} href={(d) => `/forecast?date=${d}`} label={day} />
           <div className="grid md:grid-cols-[2fr_3fr] gap-6 mb-8">
             <Stat lead label={`Worker shortage, ${day(date)}`} value={short} hint={`across ${todays.filter((r) => r.shortage > 0).length} service and area cells`} />
-            <div className="grid grid-cols-2 gap-6 content-center border-l border-line pl-6">
+            <div className="grid grid-cols-2 gap-6 content-center md:border-l border-line md:pl-6">
               <Stat label="Predicted jobs" value={Math.round(todays.reduce((n, r) => n + r.predicted, 0))} />
               <Stat label="Available workers" value={todays.reduce((n, r) => n + r.available_workers, 0)} />
             </div>

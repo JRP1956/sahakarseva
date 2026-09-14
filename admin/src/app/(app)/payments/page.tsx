@@ -13,7 +13,7 @@ export default async function Payments() {
       <PageHeader title="Payments and settlements" sub="Paid bookings only. Settlement is owed to each society for its workers." />
       <div className="grid md:grid-cols-[2fr_3fr] gap-6 mb-8">
         <Stat lead label="Paid to workers" value={inr(wages)} hint={`${p.settlements.reduce((n, s) => n + s.jobs, 0)} paid jobs`} />
-        <div className="grid grid-cols-2 gap-6 content-center border-l border-line pl-6">
+        <div className="grid grid-cols-2 gap-6 content-center md:border-l border-line md:pl-6">
           <Stat label="Cooperative contribution" value={inr(coop)} />
           <Stat label="Societies to settle" value={p.settlements.length} />
         </div>

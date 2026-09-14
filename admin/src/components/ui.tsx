@@ -1,7 +1,7 @@
 import { Check as CheckIcon, Inbox, X } from "./icons";
 
 export const Card = ({ title, action, children, className = "" }: { title?: string; action?: React.ReactNode; children: React.ReactNode; className?: string }) => (
-  <section className={`bg-card border border-line rounded-card p-6 ${className}`}>
+  <section className={`bg-card border border-line rounded-card p-4 lg:p-6 ${className}`}>
     {(title || action) && (
       <div className="flex items-baseline justify-between gap-4 mb-4">
         {title && <h2 className="text-base font-semibold">{title}</h2>}
@@ -17,7 +17,7 @@ export const Stat = ({ label, value, lead = false, hint }: { label: string; valu
   lead ? (
     <div className="bg-primary text-on-action rounded-card p-6 flex flex-col justify-between min-h-40">
       <div className="text-sm opacity-80">{label}</div>
-      <div><div className="text-5xl font-semibold tnum leading-none tracking-tight">{value}</div>{hint && <div className="text-sm opacity-80 mt-2">{hint}</div>}</div>
+      <div><div className="text-4xl lg:text-5xl font-semibold tnum leading-none tracking-tight">{value}</div>{hint && <div className="text-sm opacity-80 mt-2">{hint}</div>}</div>
     </div>
   ) : (
     <div className="py-1">
@@ -28,13 +28,13 @@ export const Stat = ({ label, value, lead = false, hint }: { label: string; valu
 
 export const Table = ({ head, rows, empty = "Nothing to show yet." }: { head: string[]; rows: React.ReactNode[][]; empty?: string }) =>
   rows.length === 0 ? <Empty>{empty}</Empty> : (
-    <div className="scroll-x -mx-6">
+    <div className="scroll-x -mx-4 lg:-mx-6">
       <table className="w-full text-sm min-w-max">
         <thead className="sticky top-0 bg-card">
-          <tr className="text-left text-fg-2 border-b border-line">{head.map((h) => <th key={h} className="py-2 px-6 font-medium text-xs uppercase tracking-wide">{h}</th>)}</tr>
+          <tr className="text-left text-fg-2 border-b border-line">{head.map((h) => <th key={h} className="py-2 px-4 lg:px-6 font-medium text-xs uppercase tracking-wide">{h}</th>)}</tr>
         </thead>
         <tbody>{rows.map((r, i) => (
-          <tr key={i} className="border-b border-line last:border-0 hover:bg-sunken transition-colors">{r.map((c, j) => <td key={j} className="py-3 px-6 align-top">{c}</td>)}</tr>))}</tbody>
+          <tr key={i} className="border-b border-line last:border-0 hover:bg-sunken transition-colors">{r.map((c, j) => <td key={j} className="py-3 px-4 lg:px-6 align-top">{c}</td>)}</tr>))}</tbody>
       </table>
     </div>
   );
@@ -62,8 +62,8 @@ export const Check = ({ on, label }: { on: boolean; label: string }) => (
 );
 
 export const PageHeader = ({ title, sub, action }: { title: React.ReactNode; sub?: React.ReactNode; action?: React.ReactNode }) => (
-  <header className="flex items-end justify-between gap-6 mb-8">
-    <div><h1 className="text-4xl font-semibold tracking-tight">{title}</h1>{sub && <p className="text-sm text-fg-2 mt-2">{sub}</p>}</div>
+  <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 mb-6 lg:mb-8">
+    <div><h1 className="text-3xl lg:text-4xl font-semibold tracking-tight">{title}</h1>{sub && <p className="text-sm text-fg-2 mt-2">{sub}</p>}</div>
     {action}
   </header>
 );
