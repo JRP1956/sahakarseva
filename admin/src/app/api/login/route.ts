@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { API } from "@/lib/api";
+import { TOKEN_COOKIE } from "@/proxy";
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -8,7 +9,7 @@ export async function POST(req: Request) {
   const data = await r.json();
   if (data.role !== "admin") return NextResponse.json({ error: "Admin account required" }, { status: 403 });
   const res = NextResponse.json({ ok: true });
-  res.cookies.set("token", data.access_token, { httpOnly: true, sameSite: "lax", path: "/" });
+  res.cookies.set("token", data.access_token, TOKEN_COOKIE);
   res.cookies.set("refresh", data.refresh_token, { httpOnly: true, sameSite: "lax", path: "/", maxAge: 30 * 24 * 3600 });
   return res;
 }

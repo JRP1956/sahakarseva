@@ -752,6 +752,96 @@
         "$type": "color",
         "$value": "{primitive.gray.700}"
       }
+    },
+    "interactive": {
+      "hover-overlay": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.06)"
+      },
+      "active-overlay": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.10)"
+      },
+      "selected-bg": {
+        "$type": "color",
+        "$value": "{primitive.blue.900}",
+        "$description": "Dark selected surface; light text stays >= 4.5:1"
+      },
+      "selected-border": {
+        "$type": "color",
+        "$value": "{primitive.blue.700}"
+      },
+      "focus-ring": {
+        "$type": "color",
+        "$value": "{primitive.blue.400}"
+      }
+    },
+    "feedback": {
+      "success-bg": {
+        "$type": "color",
+        "$value": "{primitive.green.950}"
+      },
+      "success-text": {
+        "$type": "color",
+        "$value": "{primitive.green.300}"
+      },
+      "success-border": {
+        "$type": "color",
+        "$value": "{primitive.green.800}"
+      },
+      "success-icon": {
+        "$type": "color",
+        "$value": "{primitive.green.400}"
+      },
+      "warning-bg": {
+        "$type": "color",
+        "$value": "{primitive.amber.950}"
+      },
+      "warning-text": {
+        "$type": "color",
+        "$value": "{primitive.amber.300}"
+      },
+      "warning-border": {
+        "$type": "color",
+        "$value": "{primitive.amber.800}"
+      },
+      "warning-icon": {
+        "$type": "color",
+        "$value": "{primitive.amber.400}"
+      },
+      "error-bg": {
+        "$type": "color",
+        "$value": "{primitive.red.950}"
+      },
+      "error-text": {
+        "$type": "color",
+        "$value": "{primitive.red.300}"
+      },
+      "error-border": {
+        "$type": "color",
+        "$value": "{primitive.red.800}"
+      },
+      "error-icon": {
+        "$type": "color",
+        "$value": "{primitive.red.400}"
+      },
+      "info-bg": {
+        "$type": "color",
+        "$value": "{primitive.blue.950}"
+      },
+      "info-text": {
+        "$type": "color",
+        "$value": "{primitive.blue.300}"
+      },
+      "info-border": {
+        "$type": "color",
+        "$value": "{primitive.blue.800}"
+      },
+      "info-icon": {
+        "$type": "color",
+        "$value": "{primitive.blue.400}"
+      },
+      "$description": "Dark feedback: deep tinted surfaces with light text, instead of the light pastels"
     }
   }
 }
