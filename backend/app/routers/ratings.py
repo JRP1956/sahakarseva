@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
-from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.core.db import get_db
@@ -28,7 +27,7 @@ def rate(body: RatingIn, user: User = Depends(require_role(Role.customer)), db: 
     db.add(Rating(booking_id=b.id, stars=body.stars, comment=body.comment))
     db.flush()
     w = b.worker
-    avg, n = db.execute(select(func.avg(Rating.stars), func.count()).join(Booking).where(Booking.worker_id == w.id)).one()
-    w.rating_avg, w.rating_count = round(float(avg), 2), n
+    w.rating_avg = round((w.rating_avg * w.rating_count + body.stars) / (w.rating_count + 1), 2)
+    w.rating_count += 1
     db.commit()
     return booking_out(b)
