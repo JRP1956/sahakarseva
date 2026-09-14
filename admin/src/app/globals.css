@@ -1,8 +1,77 @@
 @import "tailwindcss";
+@import "./theme.css";
 
-body {
-  background: #f9fafb;
-  color: #111827;
-  font-family: ui-sans-serif, system-ui, sans-serif;
-  color-scheme: light;
+/* Tailwind v4 utilities resolve to the token layer: bg-page, text-fg, border-line, etc. */
+@theme inline {
+  --color-page: var(--color-surface-page);
+  --color-card: var(--color-surface-card);
+  --color-raised: var(--color-surface-raised);
+  --color-sunken: var(--color-surface-sunken);
+  --color-fg: var(--color-text-primary);
+  --color-fg-2: var(--color-text-secondary);
+  --color-fg-3: var(--color-text-tertiary);
+  --color-on-action: var(--color-text-on-action);
+  --color-link: var(--color-text-link);
+  --color-line: var(--color-border-default);
+  --color-line-strong: var(--color-border-strong);
+  --color-primary: var(--color-action-primary);
+  --color-primary-hover: var(--color-action-primary-hover);
+  --color-primary-active: var(--color-action-primary-active);
+  --color-secondary: var(--color-action-secondary);
+  --color-secondary-hover: var(--color-action-secondary-hover);
+  --color-danger: var(--color-action-destructive);
+  --color-danger-hover: var(--color-action-destructive-hover);
+  --color-selected: var(--color-interactive-selected-bg);
+  --color-hover: var(--color-interactive-hover-overlay);
+  --color-success-bg: var(--color-feedback-success-bg);
+  --color-success-fg: var(--color-feedback-success-text);
+  --color-success-icon: var(--color-feedback-success-icon);
+  --color-warning-bg: var(--color-feedback-warning-bg);
+  --color-warning-fg: var(--color-feedback-warning-text);
+  --color-warning-icon: var(--color-feedback-warning-icon);
+  --color-error-bg: var(--color-feedback-error-bg);
+  --color-error-fg: var(--color-feedback-error-text);
+  --color-error-icon: var(--color-feedback-error-icon);
+  --color-info-bg: var(--color-feedback-info-bg);
+  --color-info-fg: var(--color-feedback-info-text);
+  --color-input-bg: var(--color-input-bg);
+  --color-input-border: var(--color-input-border);
+  --color-input-border-focus: var(--color-input-border-focus);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --radius-btn: var(--radius-button);
+  --radius-card: var(--radius-card);
+  --radius-input: var(--radius-input);
+  --shadow-card: var(--shadow-sm);
+  --shadow-hover: var(--shadow-md);
+  --shadow-focus: var(--shadow-focus-ring);
+  --ease-out: var(--ease-out);
+  --default-transition-duration: var(--duration-fast);
 }
+
+html { color-scheme: light dark; }
+body {
+  background: var(--color-surface-page);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal, 1.5);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { letter-spacing: -0.01em; }
+.tnum { font-variant-numeric: tabular-nums; }
+
+:focus-visible { outline: none; box-shadow: var(--shadow-focus-ring); border-radius: var(--radius-sm); }
+
+/* horizontal overflow cue for tables */
+.scroll-x { overflow-x: auto; position: relative; }
+.scroll-x::after {
+  content: ""; position: absolute; inset-block: 0; inset-inline-end: 0; width: var(--space-6); pointer-events: none;
+  background: linear-gradient(to right, transparent, var(--color-surface-card));
+}
+
+.skeleton { background: var(--color-surface-sunken); border-radius: var(--radius-md); animation: pulse var(--duration-slow) var(--ease-in-out) infinite alternate; }
+@keyframes pulse { from { opacity: 1; } to { opacity: .55; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { animation: spin calc(var(--duration-slow) * 3) var(--ease-linear) infinite; }
+@media (prefers-reduced-motion: reduce) { *, ::before, ::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }

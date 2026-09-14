@@ -5,15 +5,13 @@ export default function ForecastBars({ rows }: { rows: FRow[] }) {
   return (
     <div className="space-y-2">
       {rows.map((r, i) => (
-        <div key={i} className="grid grid-cols-[9rem_1fr_7rem] items-center gap-3 text-sm">
-          <span>{r.service}</span>
-          <div className="relative h-5 bg-gray-100 rounded">
-            <div className="absolute h-5 rounded bg-emerald-200" style={{ width: `${(r.available_workers / max) * 100}%` }} />
-            <div className={`absolute h-2 top-1.5 rounded ${r.shortage ? "bg-red-500" : "bg-emerald-700"}`} style={{ width: `${(r.predicted / max) * 100}%` }} />
+        <div key={i} className="grid grid-cols-[8rem_1fr_7rem] items-center gap-3 text-sm">
+          <span className="truncate">{r.service}</span>
+          <div className="relative h-5 bg-sunken rounded-sm" role="img" aria-label={`${r.service}: ${r.predicted.toFixed(0)} predicted, ${r.available_workers} available`}>
+            <div className="absolute h-5 rounded-sm bg-selected" style={{ width: `${(r.available_workers / max) * 100}%` }} />
+            <div className={`absolute h-2 top-1.5 rounded-sm ${r.shortage ? "bg-error-icon" : "bg-primary"}`} style={{ width: `${(r.predicted / max) * 100}%` }} />
           </div>
-          <span className="text-right tabular-nums">
-            {r.predicted.toFixed(0)} / {r.available_workers}{r.shortage > 0 && <span className="text-red-600 ml-1">▲{r.shortage}</span>}
-          </span>
+          <span className="text-right tnum">{r.predicted.toFixed(0)} <span className="text-fg-2">/ {r.available_workers}</span>{r.shortage > 0 && <span className="text-error-fg font-medium ml-2">short {r.shortage}</span>}</span>
         </div>
       ))}
     </div>
