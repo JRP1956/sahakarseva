@@ -17,7 +17,7 @@ dependencies = [
   "razorpay",
   "pandas",
   "xgboost",
-  "scikit-learn",
+  "scikit-learn",  # XGBRegressor imports it
 ]
 
 [dependency-groups]

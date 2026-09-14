@@ -56,9 +56,6 @@ class Api {
       _handle(await http.post(Uri.parse('$apiUrl$path'), headers: _headers, body: body == null ? null : jsonEncode(body)));
   Future<dynamic> put(String path, Object body) async =>
       _handle(await http.put(Uri.parse('$apiUrl$path'), headers: _headers, body: jsonEncode(body)));
-  Future<dynamic> patch(String path, Object body) async =>
-      _handle(await http.patch(Uri.parse('$apiUrl$path'), headers: _headers, body: jsonEncode(body)));
-
   Future<dynamic> form(String path, Map<String, String> fields) async {
     final req = http.MultipartRequest('POST', Uri.parse('$apiUrl$path'))
       ..headers['authorization'] = 'Bearer $token'

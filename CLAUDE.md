@@ -23,7 +23,7 @@ Do **not** optimise for scale, multi-tenancy, or security hardening beyond what 
 
 ```
 gig-work/
-├── CLAUDE.md / AGENTS.md         ← you are here
+├── CLAUDE.md (AGENTS.md is a symlink) ← you are here
 ├── README.md                      quick start
 ├── docker-compose.yml             PostGIS on host port 5433 (5432 is taken by a local Postgres on the dev Mac)
 ├── .claude/launch.json            `admin` dev-server config for the Claude browser pane
@@ -39,7 +39,7 @@ gig-work/
     ├── SIH-PPT-CONTEXT.md         narrative brief for the presentation
     └── superpowers/
         ├── specs/2026-09-14-coop-gig-platform-design.md   the approved design spec (source of truth)
-        └── plans/                 per-subsystem implementation plans (backend, admin, mobile)
+        (implementation plans were removed after execution; the git log has them)
 ```
 
 ## Golden rules for agents
@@ -98,8 +98,9 @@ gig-work/
 
 ## Design system (non-negotiable for any UI change)
 
-The UI is built on the vendored `plugin87/ux-ui-agent-skills` kit (`tokens/`, `components/`, `taste/`, `.claude/rules/*`,
-`scripts/`). The full doctrine is in `docs/design-kit-doctrine.md`; the parts that bite here:
+The UI follows `plugin87/ux-ui-agent-skills` v2.10. Only what we run is vendored: `tokens/*.json`, four scripts in
+`scripts/`, and `.claude/rules/*`. The full doctrine is in `docs/design-kit-doctrine.md` (paths it mentions such as
+`components/` or `taste/` refer to the upstream kit, not this repo); the parts that bite here:
 
 1. **One theme, one source of truth.** `tokens/*.json` -> generated `admin/src/app/theme.css` and `mobile/lib/theme_tokens.g.dart`.
    No hex, px, `Colors.*`, or Tailwind palette classes in screens. Gate: `python3 scripts/lint_hardcodes.py admin/src`.

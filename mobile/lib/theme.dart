@@ -12,7 +12,6 @@ class Ds extends ThemeExtension<Ds> {
   static const space1 = 4.0, space2 = 8.0, space3 = 12.0, space4 = 16.0, space6 = 24.0, space8 = 32.0, space12 = 48.0;
   static const radiusButton = 8.0, radiusCard = 12.0, radiusBadge = 999.0;
   static const controlLg = 52.0, controlMd = 44.0;
-  static const fast = Duration(milliseconds: 150), base = Duration(milliseconds: 200);
 
   @override
   Ds copyWith({DsColors? c}) => Ds(c ?? this.c);

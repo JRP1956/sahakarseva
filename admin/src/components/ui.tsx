@@ -67,7 +67,6 @@ export const PageHeader = ({ title, sub, action }: { title: React.ReactNode; sub
     {action}
   </header>
 );
-export const H1 = ({ children }: { children: React.ReactNode }) => <PageHeader title={children} />;
 
 const BTN = "inline-flex items-center justify-center gap-2 h-9 px-4 rounded-btn text-sm font-medium transition-colors focus-visible:shadow-focus disabled:pointer-events-none [&:disabled:not([aria-busy=true])]:opacity-50";
 export const btn = {

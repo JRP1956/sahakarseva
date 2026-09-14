@@ -147,12 +147,6 @@ class Empty extends StatelessWidget {
   }
 }
 
-class Loading extends StatelessWidget {
-  const Loading({super.key});
-  @override
-  Widget build(BuildContext context) => const Center(child: SizedBox(width: 28, height: 28, child: CircularProgressIndicator(strokeWidth: 2.5)));
-}
-
 /// FutureBuilder that shows a spinner / error and rebuilds on [refresh].
 class Async<T> extends StatelessWidget {
   const Async({super.key, required this.future, required this.builder});
@@ -163,7 +157,7 @@ class Async<T> extends StatelessWidget {
         future: future,
         builder: (c, s) {
           if (s.hasError) return Empty(icon: Icons.cloud_off_rounded, title: AppLocalizations.of(context)!.error, body: '${s.error}');
-          if (!s.hasData) return const Loading();
+          if (!s.hasData) return const Center(child: SizedBox(width: 28, height: 28, child: CircularProgressIndicator(strokeWidth: 2.5)));
           return builder(s.data as T);
         },
       );
