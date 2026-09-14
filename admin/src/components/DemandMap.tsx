@@ -3,7 +3,8 @@ import { CircleMarker, MapContainer, Popup, TileLayer } from "react-leaflet";
 
 export type Point = { lat: number; lng: number; service: string; status: string; is_emergency: boolean };
 
-// ponytail: leaflet paints on canvas/SVG outside CSS cascade, so read the token values once at render
+// ponytail: leaflet paints outside the CSS cascade, so token colours are read once at mount; markers keep the
+// old colour if the OS theme flips while the map is open. Upgrade: re-read on a matchMedia change event.
 const tone = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
 export default function DemandMap({ points }: { points: Point[] }) {

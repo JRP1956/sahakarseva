@@ -101,7 +101,7 @@ cd backend && uv run alembic upgrade head && uv run python seed.py
 | Admin page shows a colour that ignores dark mode | It used a hex or a Tailwind palette class instead of a token utility. `python3 scripts/lint_hardcodes.py admin/src` finds it. |
 | Next dev: `Parsing CSS source code failed … --space-0.5` | Regenerated `theme.css` without renaming the fractional vars: `sed -i '' -E 's/--space-([0-9])\.5:/--space-\1-5:/' admin/src/app/theme.css`. |
 | Flutter colour looks wrong in dark mode | Screen used `Colors.*` or a light-only token. Use `Ds.of(context).c.<token>`; accent text on surfaces is `textLink`, not `actionPrimary`. |
-| Admin `apiFetch` throws `401` after ~15 min | Access token expired; sign out/in. Refresh flow is deliberately absent. |
+| Admin bounces to `/login` mid-session | The 30-day `refresh` cookie is missing or invalid (cleared cookies, or the backend `SECRET_KEY` changed). `src/proxy.ts` swaps the 15-min access token automatically while it is present. |
 | `POST /payments/demo-mark-paid` → 404 | `DEMO_MARK_PAID=false` in env; intended for production. |
 | Match returns `[]` | No available worker with that service's skill within 10 km of the pin, or all busy at that hour. Default pin is Andheri where the seed guarantees plumbers/electricians/cleaners. |
 | Forecast page empty | Run it once: **Run 7-day forecast** or `POST /admin/forecast/run`. |

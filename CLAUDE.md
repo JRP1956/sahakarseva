@@ -125,5 +125,5 @@ Direction: anchor `enterprise` from the kit library, retuned. Admin = compact de
 ## Things that are explicitly out of scope (do not build unless asked)
 
 Redis/Celery, FCM push, S3/Cloudinary, separate customer/worker Flutter apps, real settlement/KYC, refresh-token
-rotation in the admin, pagination, RBAC beyond the three roles, i18n of DB content (service names), tests for
+rotation (the admin refreshes, it does not rotate), pagination, RBAC beyond the three roles, i18n of DB content (service names), tests for
 Flutter/Next (manual smoke only).

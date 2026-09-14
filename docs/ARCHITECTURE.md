@@ -169,4 +169,4 @@ translating data is out of scope. Language is stored per device (`SharedPreferen
 
 Redis/Celery (no background work exists), FCM (needs Firebase project + signed builds), object storage (files go to
 `backend/uploads/`), Razorpay SDK in Flutter (no web support; backend verify endpoint is ready), refresh-token
-rotation in admin, pagination, audit logs. Each is listed with the upgrade path in the spec.
+rotation (the admin refreshes via `proxy.ts`; the backend reissues nothing), pagination, audit logs. Each is listed with the upgrade path in the spec.

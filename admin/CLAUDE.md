@@ -15,9 +15,11 @@ Login `9999999999` / `pass123` (only `role == "admin"` accounts are accepted).
 ## How it works
 
 - **Auth:** `POST /api/login` (route handler) forwards to FastAPI `/auth/login`, rejects non-admins, stores the
-  15-minute access token in an `httpOnly` cookie `token`. `src/proxy.ts` (Next 16's middleware) redirects to `/login`
-  when the cookie is missing. `POST /api/logout` clears it. No refresh — re-login if a demo runs long
-  (`ponytail:` comment in `route.ts`).
+  15-minute access token in cookie `token` and the 30-day refresh token in cookie `refresh` (both `httpOnly`).
+  `src/proxy.ts` (Next 16's middleware) runs before every page: no cookies → `/login`; access token expiring within
+  60 s → `POST /auth/refresh`, new `token` cookie set on both the response and the in-flight request so server
+  components see it; refresh rejected → clear both and `/login`. `POST /api/logout` clears both. The backend does
+  not rotate refresh tokens, so the `refresh` cookie is written once at login.
 - **Data fetching:** every page is a **server component** calling `apiFetch<T>(path)` from `src/lib/api.ts`, which
   reads the cookie via `await cookies()` and hits FastAPI with `cache: "no-store"`. Throws on non-2xx (Next shows
   the error boundary). No client-side fetching except the two buttons below.
