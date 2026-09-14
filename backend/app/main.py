@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routers import auth, bookings, invoices, payments, ratings, services, workers
+from app.routers import admin, auth, bookings, invoices, payments, ratings, services, workers
 
 
 def create_app() -> FastAPI:
@@ -12,7 +12,7 @@ def create_app() -> FastAPI:
     def health():
         return {"ok": True}
 
-    for r in (auth, services, workers, bookings, payments, ratings, invoices):
+    for r in (auth, services, workers, bookings, payments, ratings, invoices, admin):
         app.include_router(r.router, prefix="/api/v1")
     return app
 
