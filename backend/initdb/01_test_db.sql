@@ -1,0 +1,3 @@
+CREATE DATABASE gig_test;
+\c gig_test
+CREATE EXTENSION IF NOT EXISTS postgis;

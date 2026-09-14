@@ -1,0 +1,27 @@
+[project]
+name = "gig-backend"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn[standard]",
+  "sqlalchemy>=2.0",
+  "geoalchemy2",
+  "psycopg[binary]",
+  "alembic",
+  "pydantic-settings",
+  "python-jose[cryptography]",
+  "passlib[bcrypt]",
+  "bcrypt<4.1",
+  "python-multipart",
+  "razorpay",
+  "pandas",
+  "xgboost",
+  "scikit-learn",
+]
+
+[dependency-groups]
+dev = ["pytest", "httpx"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
